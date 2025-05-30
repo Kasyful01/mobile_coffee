@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kedai Kopi Online</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6f4e37, #d7c49e);
+    color: #3e2f1c;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: #4b3621;
+    color: #fff;
+    padding: 1rem 2rem;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    background: #8b6d5c;
+    overflow-x: auto;
+  }
+  nav button {
+    background: transparent;
+    border: none;
+    color: #f0e6d2;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  nav button:hover,
+  nav button.active {
+    background-color: #6f4e37;
+    color: #fff;
+  }
+  main {
+    flex-grow: 1;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    background: rgba(255 255 255 / 0.85);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+  section {
+    display: none;
+  }
+  section.active {
+    display: block;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #4b3621;
+  }
+
+  /* Fitur Utama - Hero */
+  #fitur-utama {
+    text-align: center;
+  }
+  #fitur-utama p {
+    font-size: 1.2rem;
+    margin: 1rem 0 2rem;
+    font-weight: 500;
+  }
+  #fitur-utama ul {
+    max-width: 600px;
+    margin: 0 auto;
+    list-style-type: disc;
+    font-size: 1.1rem;
+    text-align: left;
+  }
+  #fitur-utama ul li {
+    margin-bottom: 0.8rem;
+  }
+
+  /* Menu Daftar */
+  #daftar-menu .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f7f0e8;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(111,78,55,.2);
+  }
+  #daftar-menu .menu-item img {
+    width: 100px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #6f4e37;
+  }
+  #daftar-menu .menu-item div {
+    flex-grow: 1;
+  }
+  #daftar-menu .menu-item .nama {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #4b3621;
+  }
+  #daftar-menu .menu-item .deskripsi {
+    font-size: 0.9rem;
+    color: #7a5a3a;
+    font-style: italic;
+    margin: 0.3rem 0;
+  }
+  #daftar-menu .menu-item .harga {
+    font-weight: 700;
+    color: #6f4e37;
+    font-size: 1.1rem;
+  }
+
+  /* Formulir Pemesanan */
+  #formulir-pemesanan form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  #formulir-pemesanan label {
+    display: block;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  #formulir-pemesanan select,
+  #formulir-pemesanan input[type=number],
+  #formulir-pemesanan input[type=text] {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #6f4e37;
+    font-size: 1rem;
+  }
+  #formulir-pemesanan button {
+    margin-top: 1.5rem;
+    background: #6f4e37;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  #formulir-pemesanan button:hover {
+    background: #543a23;
+  }
+  #formulir-pemesanan .info {
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  /* Sistem Pembayaran */
+  #sistem-pembayaran form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  #sistem-pembayaran label {
+    display: block;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  #sistem-pembayaran input[type=text],
+  #sistem-pembayaran input[type=number],
+  #sistem-pembayaran select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #6f4e37;
+    font-size: 1rem;
+  }
+  #sistem-pembayaran button {
+    margin-top: 1.5rem;
+    background: #6f4e37;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  #sistem-pembayaran button:hover {
+    background: #543a23;
+  }
+  #sistem-pembayaran .info {
+    margin-top: 1rem;
+    font-style: italic;
+    color: green;
+    font-weight: 600;
+  }
+
+  /* Program Loyalitas */
+  #program-loyalitas {
+    text-align: center;
+    font-size: 1.1rem;
+  }
+  #program-loyalitas .points {
+    margin-top: 1rem;
+    font-size: 2rem;
+    color: #6f4e37;
+    font-weight: 700;
+  }
+  #program-loyalitas button {
+    margin-top: 1rem;
+    background: #6f4e37;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  #program-loyalitas button:hover {
+    background: #543a23;
+  }
+
+  /* Ulasan dan Rating Pelanggan */
+  #ulasan-rating form {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    text-align: left;
+  }
+  #ulasan-rating label {
+    display: block;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+  }
+  #ulasan-rating textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #6f4e37;
+    font-size: 1rem;
+    resize: vertical;
+  }
+  #ulasan-rating select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #6f4e37;
+    font-size: 1rem;
+  }
+  #ulasan-rating button {
+    margin-top: 1rem;
+    background: #6f4e37;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  #ulasan-rating button:hover {
+    background: #543a23;
+  }
+  #ulasan-rating .reviews-list {
+    margin-top: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #ulasan-rating .review-item {
+    background: #f7f0e8;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(111,78,55,.2);
+  }
+  #ulasan-rating .review-item .review-rating {
+    font-weight: 700;
+    color: #6f4e37;
+    margin-bottom: 0.5rem;
+  }
+  #ulasan-rating .review-item .review-text {
+    font-style: italic;
+  }
+
+  /* Responsive adjustments for mobile devices */
+  @media (max-width: 600px) {
+    nav {
+      gap: 0.3rem;
+      padding: 0.2rem 0.5rem;
+    }
+    nav button {
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+    }
+    main {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    #fitur-utama ul {
+      max-width: 100%;
+      font-size: 1rem;
+    }
+    #daftar-menu .menu-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.8rem;
+    }
+    #daftar-menu .menu-item img {
+      width: 100%;
+      height: 150px;
+      border-radius: 12px;
+      border-width: 1.5px;
+    }
+    #daftar-menu .menu-item .nama {
+      font-size: 1.1rem;
+    }
+    #daftar-menu .menu-item .deskripsi {
+      font-size: 0.85rem;
+    }
+    #daftar-menu .menu-item .harga {
+      font-size: 1rem;
+    }
+    #formulir-pemesanan form,
+    #sistem-pembayaran form,
+    #ulasan-rating form {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+    #formulir-pemesanan label,
+    #sistem-pembayaran label,
+    #ulasan-rating label {
+      font-size: 0.9rem;
+    }
+    #formulir-pemesanan select,
+    #formulir-pemesanan input[type=number],
+    #formulir-pemesanan input[type=text],
+    #sistem-pembayaran select,
+    #sistem-pembayaran input[type=text],
+    #sistem-pembayaran input[type=number],
+    #ulasan-rating textarea,
+    #ulasan-rating select,
+    #ulasan-rating input[type=text] {
+      font-size: 1rem;
+      padding: 0.5rem 0.6rem;
+    }
+    #formulir-pemesanan button,
+    #sistem-pembayaran button,
+    #ulasan-rating button,
+    #program-loyalitas button {
+      font-size: 1rem;
+      padding: 0.65rem 1rem;
+    }
+    #program-loyalitas .points {
+      font-size: 1.5rem;
+    }
+  }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>Online Kedai Kopi</h1>
+</header>
+<nav>
+  <button class="nav-btn active" data-target="fitur-utama">Fitur Utama</button>
+  <button class="nav-btn" data-target="halaman-beranda">Beranda</button>
+  <button class="nav-btn" data-target="daftar-menu">Daftar Menu</button>
+  <button class="nav-btn" data-target="formulir-pemesanan">Pemesanan</button>
+  <button class="nav-btn" data-target="sistem-pembayaran">Pembayaran</button>
+  <button class="nav-btn" data-target="program-loyalitas">Loyalitas</button>
+  <button class="nav-btn" data-target="ulasan-rating">Ulasan & Rating</button>
+</nav>
+<main>
+  <!-- 1. Fitur Utama Platform Online Kedai Kopi -->
+  <section id="fitur-utama" class="active">
+    <h2>Fitur Utama</h2>
+    <p>Platform Online Kedai Kopi kami hadir dengan fitur lengkap untuk meningkatkan pengalaman pelanggan:</p>
+    <ul>
+      <li>Mudah menjelajahi menu kopi secara digital</li>
+      <li>Pemesanan cepat dan praktis</li>
+      <li>Transaksi pembayaran aman dan nyaman</li>
+      <li>Program loyalitas untuk pelanggan setia</li>
+      <li>Fitur ulasan dan rating untuk feedback</li>
+    </ul>
+  </section>
+
+  <!-- 2. Halaman Beranda -->
+  <section id="halaman-beranda">
+    <h2>Selamat Datang di Kedai Kopi Online Kami</h2>
+    <p>Nikmati cita rasa kopi terbaik dari kenyamanan rumahmu. Jelajahi berbagai macam kopi yang kami tawarkan dan pesan kopi favoritmu dengan mudah.</p>
+    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Kopi" style="display: block; margin: 1rem auto; max-width: 100%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);" />
+  </section>
+
+  <!-- 3. Daftar Menu Digital -->
+  <section id="daftar-menu">
+    <h2>Daftar Menu Kopi</h2>
+    <div id="menu-list">
+      <!-- Menu items appear here -->
+    </div>
+  </section>
+
+  <!-- 4. Formulir Pemesanan -->
+  <section id="formulir-pemesanan">
+    <h2>Formulir Pemesanan</h2>
+    <form id="orderForm">
+      <label for="menuSelect">Pilih Menu Kopi</label>
+      <select id="menuSelect" required>
+        <option value="">-- Pilih kopi --</option>
+      </select>
+
+      <label for="jumlahPorsi">Jumlah</label>
+      <input type="number" id="jumlahPorsi" value="1" min="1" required />
+
+      <label for="namaPemesan">Nama Pemesan</label>
+      <input type="text" id="namaPemesan" placeholder="Masukkan nama Anda" required />
+
+      <button type="submit">Pesan Sekarang</button>
+    </form>
+    <p class="info" id="orderInfo"></p>
+  </section>
+
+  <!-- 5. Sistem Pembayaran Online -->
+  <section id="sistem-pembayaran">
+    <h2>Sistem Pembayaran</h2>
+    <form id="paymentForm">
+      <label for="paymentAmount">Jumlah Bayar (Rp)</label>
+      <input type="number" id="paymentAmount" min="1000" placeholder="Masukkan jumlah bayar" required />
+
+      <label for="paymentMethod">Metode Pembayaran</label>
+      <select id="paymentMethod" required>
+        <option value="">-- Pilih metode --</option>
+        <option value="transfer">Transfer Bank</option>
+        <option value="ovo">OVO</option>
+        <option value="gopay">GoPay</option>
+        <option value="dana">Dana</option>
+      </select>
+
+      <label for="paymentName">Nama Pemilik Rekening / Akun</label>
+      <input type="text" id="paymentName" placeholder="Masukkan nama pemilik" required />
+
+      <button type="submit">Bayar Sekarang</button>
+    </form>
+    <p class="info" id="paymentInfo"></p>
+  </section>
+
+  <!-- 6. Program Loyalitas -->
+  <section id="program-loyalitas">
+    <h2>Program Loyalitas</h2>
+    <p>Setiap pembelian kopi akan mendapatkan poin loyalitas yang dapat dikumpulkan dan ditukar dengan diskon menarik!</p>
+    <div class="points" id="loyaltyPoints">0 Poin</div>
+    <button id="resetPointsBtn">Reset Poin</button>
+    <p class="info" id="loyaltyInfo"></p>
+  </section>
+
+  <!-- 7. Ulasan dan Rating Pelanggan -->
+  <section id="ulasan-rating">
+    <h2>Ulasan dan Rating Pelanggan</h2>
+    <form id="reviewForm">
+      <label for="reviewName">Nama</label>
+      <input type="text" id="reviewName" placeholder="Masukkan nama Anda" required />
+
+      <label for="reviewRating">Rating</label>
+      <select id="reviewRating" required>
+        <option value="">-- Pilih rating --</option>
+        <option value="5">5 - Sangat Bagus</option>
+        <option value="4">4 - Bagus</option>
+        <option value="3">3 - Cukup</option>
+        <option value="2">2 - Kurang</option>
+        <option value="1">1 - Buruk</option>
+      </select>
+
+      <label for="reviewText">Ulasan</label>
+      <textarea id="reviewText" placeholder="Tulis ulasan Anda di sini..." required></textarea>
+      
+      <button type="submit">Kirim Ulasan</button>
+    </form>
+    <div class="reviews-list" id="reviewsList">
+      <!-- Reviews will show here -->
+    </div>
+  </section>
+</main>
+<script>
+  // Navigation buttons logic
+  const navButtons = document.querySelectorAll('nav button');
+  const sections = document.querySelectorAll('main section');
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active class on all buttons and sections
+      navButtons.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      // Add active to clicked button and corresponding section
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-target');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+
+  // 3. Menu items data
+  const menuItems = [
+    {
+      id: 'kopi1',
+      nama: 'Espresso Classic',
+      deskripsi: 'Kopi hitam pekat dengan rasa yang kuat dan aroma yang khas.',
+      harga: 15000,
+      gambar: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+      id: 'kopi2',
+      nama: 'Cappuccino',
+      deskripsi: 'Kopi espresso dengan susu berbusa lembut dan sedikit taburan coklat.',
+      harga: 25000,
+      gambar: 'https://images.unsplash.com/photo/a-cup-of-cappuccino-on-a-white-table-x1yhDWIWDV8'
+    },
+    {
+      id: 'kopi3',
+      nama: 'Latte',
+      deskripsi: 'Minuman kopi dengan susu yang creamy dan rasa yang lembut.',
+      harga: 22000,
+      gambar: 'https://images.unsplash.com/photo-1486308510493-cdd30d996a17?auto=format&fit=crop&w=600&q=80'
+    },
+    {
+      id: 'kopi4',
+      nama: 'Americano',
+      deskripsi: 'Espresso yang dicampur dengan air panas, rasa ringan dan segar.',
+      harga: 18000,
+      gambar: 'https://images.unsplash.com/photo-1434493789847-5a0746f72e50?auto=format&fit=crop&w=600&q=80'
+    }
+  ];
+
+  // Render menu list
+  const menuListElem = document.getElementById('menu-list');
+  function renderMenuList() {
+    menuListElem.innerHTML = '';
+    menuItems.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'menu-item';
+      div.innerHTML = `
+        <img src="${item.gambar}" alt="${item.nama}">
+        <div>
+          <div class="nama">${item.nama}</div>
+          <div class="deskripsi">${item.deskripsi}</div>
+          <div class="harga">Rp ${item.harga.toLocaleString('id-ID')}</div>
+        </div>
+      `;
+      menuListElem.appendChild(div);
+    });
+  }
+  renderMenuList();
+
+  // Populate menu select in order form
+  const menuSelect = document.getElementById('menuSelect');
+  function populateMenuSelect() {
+    menuItems.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item.id;
+      option.textContent = `${item.nama} - Rp ${item.harga.toLocaleString('id-ID')}`;
+      menuSelect.appendChild(option);
+    });
+  }
+  populateMenuSelect();
+
+  // 4. Formulir Pemesanan logic
+  const orderForm = document.getElementById('orderForm');
+  const orderInfo = document.getElementById('orderInfo');
+
+  orderForm.addEventListener('submit', e => {
+    e.preventDefault();
+    orderInfo.textContent = '';
+    const menuId = menuSelect.value;
+    const jumlah = parseInt(document.getElementById('jumlahPorsi').value);
+    const namaPesan = document.getElementById('namaPemesan').value.trim();
+
+    if (!menuId) {
+      orderInfo.textContent = 'Silakan pilih menu kopi.';
+      orderInfo.style.color = 'red';
+      return;
+    }
+    if (jumlah < 1 || isNaN(jumlah)) {
+      orderInfo.textContent = 'Jumlah harus minimal 1.';
+      orderInfo.style.color = 'red';
+      return;
+    }
+    if (!namaPesan) {
+      orderInfo.textContent = 'Nama pemesan harus diisi.';
+      orderInfo.style.color = 'red';
+      return;
+    }
+
+    const item = menuItems.find(i => i.id === menuId);
+    if(!item) {
+      orderInfo.textContent = 'Menu kopi tidak ditemukan.';
+      orderInfo.style.color = 'red';
+      return;
+    }
+
+    const totalHarga = jumlah * item.harga;
+
+    // Simpan data order di localStorage
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push({menuId, jumlah, namaPesan, totalHarga, waktu: new Date().toISOString()});
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // Berikan poin loyalitas: 1 poin per 10rb rupiah
+    let points = parseInt(localStorage.getItem('loyaltyPoints')) || 0;
+    points += Math.floor(totalHarga / 10000);
+    localStorage.setItem('loyaltyPoints', points);
+
+    updateLoyaltyPointsUI();
+
+    orderInfo.textContent = `Terima kasih, ${namaPesan}! Pesanan Anda untuk ${jumlah}x ${item.nama} berhasil. Total harga Rp ${totalHarga.toLocaleString('id-ID')}`;
+    orderInfo.style.color = 'green';
+    orderForm.reset();
+    menuSelect.value = '';
+  });
+
+  // 5. Sistem Pembayaran logic
+  const paymentForm = document.getElementById('paymentForm');
+  const paymentInfo = document.getElementById('paymentInfo');
+
+  paymentForm.addEventListener('submit', e => {
+    e.preventDefault();
+    paymentInfo.textContent = '';
+    const amount = parseInt(document.getElementById('paymentAmount').value);
+    const method = document.getElementById('paymentMethod').value;
+    const name = document.getElementById('paymentName').value.trim();
+
+    if (isNaN(amount) || amount < 1000) {
+      paymentInfo.textContent = 'Jumlah bayar minimal Rp 1000.';
+      paymentInfo.style.color = 'red';
+      return;
+    }
+    if (!method) {
+      paymentInfo.textContent = 'Silakan pilih metode pembayaran.';
+      paymentInfo.style.color = 'red';
+      return;
+    }
+    if (!name) {
+      paymentInfo.textContent = 'Nama pemilik rekening/akun harus diisi.';
+      paymentInfo.style.color = 'red';
+      return;
+    }
+
+    // Simulasi proses pembayaran
+    paymentInfo.textContent = `Pembayaran Rp ${amount.toLocaleString('id-ID')} via ${method.toUpperCase()} berhasil. Terima kasih, ${name}!`;
+    paymentInfo.style.color = 'green';
+    paymentForm.reset();
+  });
+
+  // 6. Program Loyalitas logic
+  const loyaltyPointsElem = document.getElementById('loyaltyPoints');
+  const loyaltyInfo = document.getElementById('loyaltyInfo');
+  const resetPointsBtn = document.getElementById('resetPointsBtn');
+
+  function updateLoyaltyPointsUI() {
+    const points = parseInt(localStorage.getItem('loyaltyPoints')) || 0;
+    loyaltyPointsElem.textContent = `${points} Poin`;
+    loyaltyInfo.textContent = points > 0 ? 'Terus kumpulkan poin untuk mendapatkan diskon menarik!' : 'Anda belum memiliki poin loyalitas.';
+    loyaltyInfo.style.color = points > 0 ? 'green' : 'black';
+  }
+  updateLoyaltyPointsUI();
+
+  resetPointsBtn.addEventListener('click', () => {
+    if (confirm('Apakah Anda yakin ingin mereset poin loyalitas Anda?')) {
+      localStorage.setItem('loyaltyPoints', 0);
+      updateLoyaltyPointsUI();
+    }
+  });
+
+  // 7. Ulasan dan Rating pelanggan
+  const reviewForm = document.getElementById('reviewForm');
+  const reviewsList = document.getElementById('reviewsList');
+
+  function loadReviews() {
+    let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+    reviewsList.innerHTML = '';
+    if(reviews.length === 0){
+      reviewsList.innerHTML = '<p style="text-align:center; color:#666;">Belum ada ulasan pelanggan.</p>';
+      return;
+    }
+    reviews.forEach(r => {
+      const div = document.createElement('div');
+      div.className = 'review-item';
+      div.innerHTML = `
+        <div class="review-rating">Rating: ${r.rating} ★</div>
+        <div class="reviewer"><strong>${r.name}</strong> berkata:</div>
+        <div class="review-text">${r.text}</div>
+      `;
+      reviewsList.appendChild(div);
+    });
+  }
+  loadReviews();
+
+  reviewForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('reviewName').value.trim();
+    const rating = document.getElementById('reviewRating').value;
+    const text = document.getElementById('reviewText').value.trim();
+
+    if(!name || !rating || !text) {
+      alert('Semua kolom ulasan harus diisi.');
+      return;
+    }
+
+    let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+    reviews.unshift({name, rating, text, date: new Date().toISOString()});
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+    reviewForm.reset();
+    loadReviews();
+    alert('Terima kasih atas ulasan Anda!');
+  });
+</script>
+</body>
+</html>
+
