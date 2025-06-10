@@ -1,0 +1,229 @@
+/* Reset & Layout */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #6f4e37, #d7c49e);
+  color: #3e2f1c;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header & Navigation */
+header {
+  background: #4b3621;
+  color: #fff;
+  padding: 1rem 2rem;
+}
+header h1 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  background: #8b6d5c;
+  overflow-x: auto;
+}
+nav button {
+  background: transparent;
+  border: none;
+  color: #f0e6d2;
+  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+nav button:hover,
+nav button.active {
+  background-color: #6f4e37;
+  color: #fff;
+}
+
+/* Main Layout */
+main {
+  flex-grow: 1;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+section {
+  display: none;
+}
+section.active {
+  display: block;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #4b3621;
+}
+/* Hero */
+.hero-img {
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+/* Responsive */
+@media (max-width: 600px) {
+  nav {
+    gap: 0.3rem;
+    padding: 0.2rem 0.5rem;
+  }
+  nav button {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+  main {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+}
+.menu-item {
+  display: flex;
+  background: #f7f0e8;
+  border-radius: 10px;
+  padding: 1rem;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.menu-item img {
+  width: 120px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+/* === Formulir Pemesanan === */
+form {
+  background: #fffaf2;
+  border: 1px solid #d9c4a1;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin: 0 auto;
+}
+form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #4b3621;
+}
+form input[type="text"],
+form input[type="number"],
+form select {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+  border: 1px solid #bca58b;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fdf9f2;
+  color: #3e2f1c;
+}
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: #6f4e37;
+  box-shadow: 0 0 0 2px rgba(111, 78, 55, 0.2);
+}
+form button {
+  background: #6f4e37;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+form button:hover {
+  background-color: #543a23;
+}
+/* Info feedback box */
+.info {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-style: italic;
+  background-color: #f1e9d5;
+  border-left: 4px solid #6f4e37;
+  color: #4b3621;
+}
+.info.error {
+  background-color: #ffe0e0;
+  border-left-color: #cc3333;
+  color: #cc3333;
+}
+.info.success {
+  background-color: #e4fbe1;
+  border-left-color: #3cae3c;
+  color: #2d802d;
+}
+.review-item {
+  background: #f7f0e8;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(111,78,55,0.2);
+}
+.review-rating {
+  color: #ffbb00;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+.review-text {
+  font-style: italic;
+}
+.rating {
+  margin-top: 0.4rem;
+  color: #ff9800;
+  font-weight: 500;
+}
+
+.rating .stars {
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+.filter-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+.filter-box label {
+  font-weight: 600;
+  color: #4b3621;
+}
+.filter-box select {
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #6f4e37;
+  font-size: 1rem;
+  background-color: #fffaf5;
+}
+
